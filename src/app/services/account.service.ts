@@ -4,11 +4,11 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from '../models/user';
 @Injectable({
-  providedIn: 'root',
+	providedIn: 'root',
 })
 export class AccountService {
-  private userSubject: BehaviorSubject<User>;
-  public user: Observable<User>;
+	private userSubject: BehaviorSubject<User>;
+	public user: Observable<User>;
 
-  constructor(private router: Router, private http: HttpClient) {}
+	constructor(private router: Router, private http: HttpClient) {}
 }

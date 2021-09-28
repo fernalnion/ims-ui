@@ -1,11 +1,4 @@
-import {
-  Component,
-  ComponentFactoryResolver,
-  Injector,
-  NgModule,
-  TemplateRef,
-  ViewChild,
-} from '@angular/core';
+import { ComponentFactoryResolver, Injector, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -21,66 +14,49 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { enUS } from 'date-fns/locale';
 import { NzConfig, NZ_CONFIG } from 'ng-zorro-antd/core/config';
+import { GlobalTemplatesComponent } from './global.templates.component';
 
 registerLocaleData(en);
 
 const ngZorroConfig: NzConfig = {
-  message: { nzTop: 120 },
-  notification: { nzTop: 240 },
+	message: { nzTop: 120 },
+	notification: { nzTop: 240 },
 };
 
-// Exporting is required for AOT compatibility
-@Component({
-  template: `
-    <ng-template #nzIndicatorTpl>
-      <span class="ant-spin-dot">
-        <i nz-icon [nzType]="'loading'"></i>
-      </span>
-    </ng-template>
-  `,
-})
-export class GlobalTemplatesComponent {
-  @ViewChild('nzIndicatorTpl', { static: true })
-  nzIndicator!: TemplateRef<void>;
-}
-
 // The Factory function
-const nzConfigFactory = (
-  injector: Injector,
-  resolver: ComponentFactoryResolver
-): NzConfig => {
-  const factory = resolver.resolveComponentFactory(GlobalTemplatesComponent);
-  const { nzIndicator } = factory.create(injector).instance;
-  return {
-    spin: {
-      nzIndicator,
-    },
-  };
+const nzConfigFactory = (injector: Injector, resolver: ComponentFactoryResolver): NzConfig => {
+	const factory = resolver.resolveComponentFactory(GlobalTemplatesComponent);
+	const { nzIndicator } = factory.create(injector).instance;
+	return {
+		spin: {
+			nzIndicator,
+		},
+	};
 };
 
 @NgModule({
-  declarations: [AppComponent, GlobalTemplatesComponent],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    IconsProviderModule,
-    NzLayoutModule,
-    NzMenuModule,
-  ],
-  providers: [
-    { provide: NZ_I18N, useValue: en_US },
-    { provide: NZ_DATE_LOCALE, useValue: enUS },
-    { provide: NZ_CONFIG, useValue: ngZorroConfig },
-    {
-      // The FactoryProvider
-      provide: NZ_CONFIG,
-      useFactory: nzConfigFactory,
-      deps: [Injector, ComponentFactoryResolver],
-    },
-  ],
-  bootstrap: [AppComponent],
+	declarations: [AppComponent, GlobalTemplatesComponent],
+	imports: [
+		BrowserModule,
+		AppRoutingModule,
+		FormsModule,
+		HttpClientModule,
+		BrowserAnimationsModule,
+		IconsProviderModule,
+		NzLayoutModule,
+		NzMenuModule,
+	],
+	providers: [
+		{ provide: NZ_I18N, useValue: en_US },
+		{ provide: NZ_DATE_LOCALE, useValue: enUS },
+		{ provide: NZ_CONFIG, useValue: ngZorroConfig },
+		{
+			// The FactoryProvider
+			provide: NZ_CONFIG,
+			useFactory: nzConfigFactory,
+			deps: [Injector, ComponentFactoryResolver],
+		},
+	],
+	bootstrap: [AppComponent],
 })
 export class AppModule {}

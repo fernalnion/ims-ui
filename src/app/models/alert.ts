@@ -1,19 +1,19 @@
 export enum AlertType {
-  Success,
-  Error,
-  Info,
-  Warning,
+	Success,
+	Error,
+	Info,
+	Warning,
 }
 
 export class Alert {
-  id: string | undefined;
-  type: AlertType | undefined;
-  message: string | undefined;
-  autoClose: boolean | undefined;
-  keepAfterRouteChange: boolean | undefined;
-  fade: boolean | undefined;
+	id: string | undefined;
+	type: AlertType | undefined;
+	message: string | undefined;
+	autoClose: boolean | undefined;
+	keepAfterRouteChange: boolean | undefined;
+	fade: boolean | undefined;
 
-  constructor(init?: Partial<Alert>) {
-    Object.assign(this, init);
-  }
+	constructor(init?: Partial<Alert>) {
+		Object.assign(this, init);
+	}
 }

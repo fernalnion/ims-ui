@@ -1,0 +1,21 @@
+{
+  "folders": [{
+    "path": "."
+  }],
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+
+      {
+        "type": "chrome",
+        "request": "launch",
+        "name": "Launch Chrome against localhost",
+        "url": "http://ims.com:4200",
+        "webRoot": "${workspaceFolder}",
+        "sourceMapPathOverrides": {
+          "webpack:/*": "${webRoot}/*"
+        }
+      }
+    ]
+  }
+}

@@ -1,12 +1,12 @@
 export interface User {
-  userid: String;
-  username: String;
-  email: String;
-  firstname: String;
-  lastname: String;
-  phone: String;
-  roleid: String;
-  dob: Date;
-  isLocked: Boolean;
-  isActivated: Boolean;
+	userid: string;
+	username: string;
+	email: string;
+	firstname: string;
+	lastname: string;
+	phone: string;
+	roleid: string;
+	dob: Date;
+	isLocked: boolean;
+	isActivated: boolean;
 }
