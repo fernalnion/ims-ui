@@ -9,6 +9,7 @@
 
 # dependencies
 /node_modules
+/.husky
 
 # profiling files
 chrome-profiler-events*.json
