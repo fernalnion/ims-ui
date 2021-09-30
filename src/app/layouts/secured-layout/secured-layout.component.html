@@ -10,8 +10,9 @@
 		></nz-sider>
 		<nz-content>
 			<nz-breadcrumb>
-				<nz-breadcrumb-item>User</nz-breadcrumb-item>
-				<nz-breadcrumb-item>Bill</nz-breadcrumb-item>
+				<nz-breadcrumb-item *ngFor="let breadcrumb of breadcrumbsList">
+					<a [routerLink]="breadcrumb.link">{{ breadcrumb.text }}</a>
+				</nz-breadcrumb-item>
 			</nz-breadcrumb>
 			<div class="inner-content">
 				<div class="spinner" *ngIf="isFetching">

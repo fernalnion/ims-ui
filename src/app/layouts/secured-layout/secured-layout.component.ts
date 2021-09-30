@@ -10,6 +10,10 @@ import { takeUntil } from 'rxjs/operators';
 import { AlertService } from 'src/app/services/alert.service';
 import { SidebarService } from 'src/app/services/sidebar.service';
 
+export interface Breadcrumb {
+	text: string;
+	link: string;
+}
 @Component({
 	selector: 'app-secured-layout',
 	templateUrl: './secured-layout.component.html',
@@ -18,6 +22,7 @@ import { SidebarService } from 'src/app/services/sidebar.service';
 export class SecuredLayoutComponent implements OnInit, OnDestroy {
 	private unsubscribe$ = new Subject<void>();
 	isFetching = true;
+	breadcrumbsList: Breadcrumb[] = [];
 	constructor(
 		private sidebarService: SidebarService,
 		private router: Router,
@@ -37,9 +42,23 @@ export class SecuredLayoutComponent implements OnInit, OnDestroy {
 			if (!(evt instanceof NavigationEnd)) {
 				return;
 			}
+
+			this.breadcrumbsList = this.Breadcrumbs(evt);
 			this.isFetching = false;
-			this.alertService.success('Loading Success', { nzDuration: 1000 * 3 });
+			// this.alertService.success('Loading Success', { nzDuration: 1000 * 3 });
 		});
+	}
+
+	private Breadcrumbs(evt: NavigationEnd): Breadcrumb[] {
+		const url = evt.urlAfterRedirects || evt.url;
+		const links: string[] = url.split('/').filter((x: string) => x.length > 0);
+		return links.map(
+			(bread, index) =>
+				<Breadcrumb>{
+					text: `${bread[0].toUpperCase()}${bread.slice(1)}`,
+					link: `/${links.slice(0, index + 1).join('/')}`,
+				}
+		);
 	}
 
 	get leftMenuStatus(): boolean {
