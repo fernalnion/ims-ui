@@ -11,7 +11,7 @@ export class CustomerService {
 	constructor(private http: HttpClient) {}
 
 	createCustomer(payload: Customer): Observable<Customer> {
-		return this.http.post<Customer>(`${environment.apiUrl}/customers/create`, {
+		return this.http.post<Customer>(`${environment.apiUrl}/customers`, {
 			...payload,
 		});
 	}

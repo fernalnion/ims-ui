@@ -137,5 +137,5 @@ export const SHARED_ZORRO_MODULES = [
 	NzWaveModule,
 	NzResizableModule,
 	NzSpaceModule,
-	NzPipesModule
+	NzPipesModule,
 ];

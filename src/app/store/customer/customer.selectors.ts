@@ -11,5 +11,5 @@ export const customerFeatureSelector =
 export const getAllCustomers = createSelector(customerFeatureSelector, selectAll);
 export const areCustomersLoaded = createSelector(
 	customerFeatureSelector,
-	(state) => state.coursesLoaded
+	(state) => state.customersLoaded
 );

@@ -9,6 +9,6 @@ export interface Customer {
 	city: string;
 	state: string;
 	country: string;
-	pincode: string;
+	pincode: Number;
 	user: string;
 }

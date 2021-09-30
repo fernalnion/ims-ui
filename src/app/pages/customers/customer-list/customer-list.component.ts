@@ -7,6 +7,7 @@ import { Customer } from 'src/app/models/customer.model';
 import { customersActionTypes } from 'src/app/store/customer/customer.actions';
 import { getAllCustomers } from 'src/app/store/customer/customer.selectors';
 import { AppState } from 'src/app/store/reducers';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
 	selector: 'app-customer-list',
@@ -14,13 +15,25 @@ import { AppState } from 'src/app/store/reducers';
 	styleUrls: ['./customer-list.component.scss'],
 })
 export class CustomerListComponent implements OnInit {
-	customers$: Observable<Customer[]> | null = null;
+	customers$: Customer[] = [];
 	customerToBeUpdated: Customer | null = null;
 	isUpdateActivated: boolean = false;
-	constructor(private customerStore: Store<AppState>) {}
+
+	searchValue: string = '';
+	visible: boolean = false;
+	listOfDisplayData: Customer[] = [];
+	setOfCheckedId = new Set<number>();
+
+	createModelVisible: boolean = false;
+	validateCreateForm!: FormGroup;
+	constructor(private customerStore: Store<AppState>, private fb: FormBuilder) {
+	}
 
 	ngOnInit() {
-		this.customers$ = this.customerStore.select(getAllCustomers);
+		this.customerStore.select(getAllCustomers).subscribe((customers) => {
+			this.customers$= [...customers];
+			this.listOfDisplayData = [...customers];
+		});
 	}
 
 	deleteCustomer(customerid: string): void {
@@ -44,5 +57,55 @@ export class CustomerListComponent implements OnInit {
 		this.customerStore.dispatch(customersActionTypes.updateCustomer({ update }));
 		this.isUpdateActivated = false;
 		this.customerToBeUpdated = null;
+	}
+
+	reset(): void {
+		this.searchValue = '';
+		this.search();
+	}
+
+	search(): void {
+		this.visible = false;
+		this.listOfDisplayData = this.customers$.filter((f: Customer) =>
+			f.phone.includes(this.searchValue)
+		);
+	}
+
+	open(): void {
+		this.validateCreateForm = this.fb.group({
+			firstname: [null, [Validators.required]],
+			lastname: [null],
+			email: [null, [Validators.required]],
+			phone: [null, [Validators.required]],
+			address1: [null, [Validators.required]],
+			address2: [null],
+			city: [null, [Validators.required]],
+			state: [null, [Validators.required]],
+			country: [null, [Validators.required]],
+			pincode: [null, [Validators.required]],
+		});
+		this.createModelVisible = true;
+	}
+
+	close(): void {
+		this.createModelVisible = false;
+	}
+
+	submitCreateForm(): void {
+		for (const i in this.validateCreateForm.controls) {
+			if (this.validateCreateForm.controls.hasOwnProperty(i)) {
+				this.validateCreateForm.controls[i].markAsDirty();
+				this.validateCreateForm.controls[i].updateValueAndValidity();
+			}
+		}
+
+		if (this.validateCreateForm.valid) {
+			this.customerStore.dispatch(
+				customersActionTypes.crearteCustomer({
+					customer: this.validateCreateForm.value,
+				})
+			);
+			this.createModelVisible = false;
+		}
 	}
 }
