@@ -4,7 +4,7 @@
 
 export const environment = {
 	production: false,
-	API_URL: `${document.baseURI.split(':').slice(1, 2).join(':')}:8080/`,
+	apiUrl: `http://${window.location.hostname?.split(':')[0]}:8080`,
 };
 
 /*

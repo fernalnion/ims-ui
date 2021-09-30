@@ -9,4 +9,6 @@ export interface User {
 	dob: Date;
 	isLocked: boolean;
 	isActivated: boolean;
+	token:string;
+	refreshToken:string;
 }

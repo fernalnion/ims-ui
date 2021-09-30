@@ -1,0 +1,18 @@
+.app-secured-layout {
+	nz-header {
+		color: #fff;
+		padding: 0;
+	}
+}
+
+.app-public-layout {
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+	display: flex;
+	.container, nz-content {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+}

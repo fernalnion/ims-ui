@@ -1,0 +1,34 @@
+<nz-layout>
+	<nz-sider
+		nzCollapsible
+		[nzCollapsed]="!leftMenuStatus"
+		[nzTrigger]="null"
+		nzTheme="light"
+	>
+		<div class="logo">IMS</div>
+		<ul nz-menu nzTheme="light" nzMode="inline">
+			<ng-template ngFor let-menuItem [ngForOf]="menuItems">
+				<li nz-menu-item *ngIf="!menuItem.children">
+					<a [routerLink]="[menuItem.link || '']">
+						<i nz-icon *ngIf="menuItem.icon" [nzType]="menuItem.icon"></i>
+						<span>{{ menuItem.text }}</span>
+					</a>
+				</li>
+				<li
+					nz-submenu
+					[nzTitle]="menuItem.text"
+					[nzIcon]="menuItem.icon || ''"
+					*ngIf="menuItem?.children"
+				>
+					<ng-template ngFor let-subMenuItem [ngForOf]="menuItem.children">
+						<ul>
+							<li nz-menu-item>
+								<a [routerLink]="[subMenuItem.link || '']">{{ subMenuItem.text }}</a>
+							</li>
+						</ul>
+					</ng-template>
+				</li>
+			</ng-template>
+		</ul>
+	</nz-sider>
+</nz-layout>

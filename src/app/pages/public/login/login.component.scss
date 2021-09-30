@@ -1,0 +1,26 @@
+.login-form {
+	width: 350px;
+	padding: 80px 50px;
+	border-radius: 5px;
+	background-color: white;
+}
+
+.login-form-margin {
+	margin-bottom: 16px;
+}
+
+.login-form-forgot {
+	float: right;
+}
+
+.login-form-button {
+	width: 100%;
+}
+
+.login-form .login-header {
+	margin: -60px 90px auto;
+    position: absolute;
+    font-size: 28px;
+    color: black;
+    text-transform: capitalize;
+}
