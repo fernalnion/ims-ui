@@ -9,7 +9,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutes, APP_COMPONENTS, APP_RESOLVERS } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NZ_I18N, en_US, NZ_DATE_LOCALE } from 'ng-zorro-antd/i18n';
-import { registerLocaleData } from '@angular/common';
+import {
+	HashLocationStrategy,
+	LocationStrategy,
+	registerLocaleData,
+} from '@angular/common';
 import en from '@angular/common/locales/en';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -29,7 +33,11 @@ import { CustomerService } from './services/customer.service';
 import { RouterModule } from '@angular/router';
 import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { TokenService } from './services/token.service';
-import { authInterceptorProviders } from './helpers/jwt.interceptor';
+import {
+	authInterceptorProviders,
+	errorInterceptorProviders,
+	dataInterceptorProviders,
+} from './helpers';
 
 registerLocaleData(en);
 
@@ -99,7 +107,13 @@ const SERVICRES = [AccountService, CustomerService];
 			useFactory: nzConfigFactory,
 			deps: [Injector, ComponentFactoryResolver],
 		},
+		{
+			provide: LocationStrategy,
+			useClass: HashLocationStrategy,
+		},
 		authInterceptorProviders,
+		errorInterceptorProviders,
+		dataInterceptorProviders,
 		...APP_RESOLVERS,
 		...SERVICRES,
 	],

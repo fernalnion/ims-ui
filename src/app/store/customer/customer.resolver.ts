@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import {select, Store} from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from '../reducers';
 import { customersActionTypes } from './customer.actions';
 import { areCustomersLoaded } from './customer.selectors';
-import {filter, first, tap} from 'rxjs/operators';
+import { filter, first, tap } from 'rxjs/operators';
 
 @Injectable()
 export class CustomerResolver implements Resolve<Observable<any>> {

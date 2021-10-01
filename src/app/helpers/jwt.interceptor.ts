@@ -12,7 +12,7 @@ import { AccountService } from '../services/account.service';
 import { TokenService } from '../services/token.service';
 
 @Injectable()
-export class JwtInterceptor implements HttpInterceptor {
+class JwtInterceptor implements HttpInterceptor {
 	constructor(
 		private accountService: AccountService,
 		private tokenService: TokenService

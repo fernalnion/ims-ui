@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
 import { Update } from '@ngrx/entity';
 
 import { Customer } from 'src/app/models/customer.model';
@@ -17,45 +16,41 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class CustomerListComponent implements OnInit {
 	customers$: Customer[] = [];
 	customerToBeUpdated: Customer | null = null;
-	isUpdateActivated: boolean = false;
 
 	searchValue: string = '';
 	visible: boolean = false;
 	listOfDisplayData: Customer[] = [];
-	setOfCheckedId = new Set<number>();
+	setOfCheckedId = new Set<string>();
+	expandSet = new Set<string>();
 
 	createModelVisible: boolean = false;
 	validateCreateForm!: FormGroup;
-	constructor(private customerStore: Store<AppState>, private fb: FormBuilder) {
-	}
+	constructor(private customerStore: Store<AppState>, private fb: FormBuilder) {}
 
 	ngOnInit() {
 		this.customerStore.select(getAllCustomers).subscribe((customers) => {
-			this.customers$= [...customers];
+			this.customers$ = [...customers];
 			this.listOfDisplayData = [...customers];
 		});
 	}
 
+	createCustomer(customer: Customer): void {
+		this.customerStore.dispatch(customersActionTypes.crearteCustomer({ customer }));
+	}
 	deleteCustomer(customerid: string): void {
 		this.customerStore.dispatch(customersActionTypes.deleteCustomer({ customerid }));
 	}
 
-	showUpdateModel(customer: Customer): void {
-		this.customerToBeUpdated = { ...customer };
-		this.isUpdateActivated = true;
-	}
-
-	updateCustomer(updateForm: any): void {
+	updateCustomer(updatedValues: Customer): void {
 		const update: Update<Customer> = {
 			id: this.customerToBeUpdated?.customerid || '',
 			changes: {
 				...this.customerToBeUpdated,
-				...updateForm.value,
+				...updatedValues,
 			},
 		};
 
 		this.customerStore.dispatch(customersActionTypes.updateCustomer({ update }));
-		this.isUpdateActivated = false;
 		this.customerToBeUpdated = null;
 	}
 
@@ -87,6 +82,24 @@ export class CustomerListComponent implements OnInit {
 		this.createModelVisible = true;
 	}
 
+	update(olddata: Customer): void {
+		this.customerToBeUpdated = { ...olddata };
+		this.validateCreateForm = this.fb.group({
+			firstname: [olddata.firstname, [Validators.required]],
+			lastname: [olddata.lastname],
+			email: [olddata.email, [Validators.required]],
+			phone: [olddata.phone, [Validators.required]],
+			address1: [olddata.address1, [Validators.required]],
+			address2: [olddata.address2],
+			city: [olddata.city, [Validators.required]],
+			state: [olddata.state, [Validators.required]],
+			country: [olddata.country, [Validators.required]],
+			pincode: [olddata.pincode, [Validators.required]],
+			customerid: [olddata.customerid],
+		});
+		this.createModelVisible = true;
+	}
+
 	close(): void {
 		this.createModelVisible = false;
 	}
@@ -100,12 +113,21 @@ export class CustomerListComponent implements OnInit {
 		}
 
 		if (this.validateCreateForm.valid) {
-			this.customerStore.dispatch(
-				customersActionTypes.crearteCustomer({
-					customer: this.validateCreateForm.value,
-				})
-			);
+			if (this.validateCreateForm.value.customerid) {
+				this.updateCustomer(this.validateCreateForm.value);
+			} else {
+				this.createCustomer(this.validateCreateForm.value);
+			}
+
 			this.createModelVisible = false;
+		}
+	}
+
+	onExpandChange(customerid: string, checked: boolean): void {
+		if (checked) {
+			this.expandSet.add(customerid);
+		} else {
+			this.expandSet.delete(customerid);
 		}
 	}
 }

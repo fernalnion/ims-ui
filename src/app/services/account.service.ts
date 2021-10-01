@@ -18,7 +18,6 @@ export class AccountService {
 	isLoggedIn = false;
 	redirectUrl: any = '/';
 	constructor(
-		private router: Router,
 		private http: HttpClient,
 		private jwtHelper: JwtHelperService,
 		private tokenService: TokenService,

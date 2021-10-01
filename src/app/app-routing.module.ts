@@ -6,6 +6,7 @@ import { SecuredLayoutComponent } from './layouts/secured-layout/secured-layout.
 import { FooterComponent } from './shared/footer/footer.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { SidebareLeftComponent } from './shared/sidebare-left/sidebare-left.component';
+import { customerStateKey } from './store/customer/customer.reducers';
 import { CustomerResolver } from './store/customer/customer.resolver';
 
 const routes: Routes = [
@@ -23,7 +24,7 @@ const routes: Routes = [
 				path: 'customers',
 				loadChildren: () =>
 					import('./pages/customers/customers.module').then((m) => m.CustomersModule),
-					resolve : { customers : CustomerResolver}
+				resolve: { [customerStateKey]: CustomerResolver },
 			},
 			{ path: '', pathMatch: 'full', redirectTo: 'welcome' },
 		],

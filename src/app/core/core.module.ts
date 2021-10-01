@@ -6,9 +6,7 @@ import { SHARED_ZORRO_MODULES } from '../ng-zorro-antd.module';
 import { throwIfAlreadyLoaded } from './module-import-guard';
 
 // services
-import { AccountService } from '../services/account.service';
 import { SidebarService } from '../services/sidebar.service';
-import { CustomerService } from '../services/customer.service';
 
 // reducers
 import { AuthStateKey, authReducer } from '../store/auth/auth.reducers';

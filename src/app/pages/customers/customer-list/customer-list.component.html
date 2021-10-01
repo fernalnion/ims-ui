@@ -1,7 +1,14 @@
 <nz-card [nzBordered]="false" nzTitle="Customers List" [nzExtra]="customerListExtra">
-	<nz-table #nzTable [nzData]="listOfDisplayData" nzLayout="fixed">
+	<nz-table
+		#nzTable
+		nzBordered
+		[nzData]="listOfDisplayData"
+		nzTableLayout="fixed"
+		nzSize="middle"
+	>
 		<thead>
 			<tr>
+				<th nzWidth="60px"></th>
 				<th>Name</th>
 				<th>Email</th>
 				<th nzCustomFilter>
@@ -14,27 +21,49 @@
 						<i nz-icon nzType="search"></i>
 					</nz-filter-trigger>
 				</th>
-				<th>Address1</th>
-				<th>Address2</th>
 				<th>City</th>
 				<th>State</th>
 				<th>Country</th>
-				<th>Pincode</th>
+				<th nzRight>Action</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr *ngFor="let data of listOfDisplayData">
-				<td>{{ data.firstname }}</td>
-				<td>{{ data.lastname }}</td>
-				<td>{{ data.email }}</td>
-				<td>{{ data.phone }}</td>
-				<td>{{ data.address1 }}</td>
-				<td>{{ data.address2 }}</td>
-				<td>{{ data.city }}</td>
-				<td>{{ data.state }}</td>
-				<td>{{ data.country }}</td>
-				<td>{{ data.pincode }}</td>
-			</tr>
+			<ng-container *ngFor="let data of listOfDisplayData">
+				<tr>
+					<td
+						[nzExpand]="expandSet.has(data.customerid)"
+						(nzExpandChange)="onExpandChange(data.customerid, $event)"
+					></td>
+					<td>{{ data.firstname }} {{ data.lastname }}</td>
+					<td>{{ data.email }}</td>
+					<td>{{ data.phone }}</td>
+					<td>{{ data.city }}</td>
+					<td>{{ data.state }}</td>
+					<td>{{ data.country }}</td>
+					<td nzRight>
+						<button
+							nz-button
+							nzSize="small"
+							nzType="link"
+							(click)="deleteCustomer(data.customerid)"
+						>
+							delete
+						</button>
+						<button nz-button nzSize="small" nzType="link" (click)="update(data)">
+							update
+						</button>
+					</td>
+				</tr>
+				<tr [nzExpand]="expandSet.has(data.customerid)">
+					<td>Address:</td>
+					<td>{{ data.address1 }}</td>
+					<td>{{ data.address2 }}</td>
+					<td>{{ data.city }}</td>
+					<td>{{ data.state }}</td>
+					<td>{{ data.country }}</td>
+					<td>{{ data.pincode }}</td>
+				</tr>
+			</ng-container>
 		</tbody>
 	</nz-table>
 </nz-card>

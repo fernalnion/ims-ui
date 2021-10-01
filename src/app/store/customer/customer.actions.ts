@@ -11,11 +11,16 @@ enum CustomerActionTypes {
 	DELETE_CUSTOMER_SUCCESSFULLY = '[CUSTOMER] Successfully Deleted Customer',
 	LOAD_CUSTOMERS = '[CUSTOMER] Load All Customers',
 	LOAD_CUSTOMERS_SUCCESSFULLY = '[CUSTOMER] Customers Loaded Successfully',
+	LOADING_CUSTOMERS_PROCESS = '[CUSTOMER] Customer Process Loading',
 }
+
+const customerProcessLoading = createAction(
+	CustomerActionTypes.LOADING_CUSTOMERS_PROCESS
+);
 
 const loadCustomers = createAction(CustomerActionTypes.LOAD_CUSTOMERS);
 
-const customersLoaded = createAction(
+const customersLoadedSuccessfully = createAction(
 	CustomerActionTypes.LOAD_CUSTOMERS_SUCCESSFULLY,
 	props<{ customers: Customer[] }>()
 );
@@ -52,11 +57,12 @@ const updateCustomerSuccessfully = createAction(
 
 export const customersActionTypes = {
 	loadCustomers,
-	customersLoaded,
+	customersLoadedSuccessfully,
 	crearteCustomer,
 	crearteCustomerSuccessfully,
 	deleteCustomer,
 	deleteCustomerSuccessfully,
 	updateCustomer,
 	updateCustomerSuccessfully,
+	customerProcessLoading,
 };

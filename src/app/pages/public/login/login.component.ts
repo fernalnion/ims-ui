@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { User } from 'src/app/models/user.model';
 import { AccountService } from 'src/app/services/account.service';
 import { authActionTypes } from 'src/app/store/auth/auth.actions';
 import { AuthState } from 'src/app/store/auth/auth.reducers';
@@ -18,7 +19,7 @@ export class LoginComponent implements OnInit {
 		private fb: FormBuilder,
 		private authStore: Store<AuthState>,
 		private accountService: AccountService,
-		private router:Router,
+		private router: Router
 	) {}
 
 	ngOnInit(): void {
@@ -31,7 +32,7 @@ export class LoginComponent implements OnInit {
 		});
 	}
 
-	submitForm(): void {
+	submitForm() {
 		for (const i in this.validateForm.controls) {
 			if (this.validateForm.controls.hasOwnProperty(i)) {
 				this.validateForm.controls[i].markAsDirty();
@@ -45,14 +46,11 @@ export class LoginComponent implements OnInit {
 				password: this.validateForm.value.password,
 			};
 
-			this.accountService.login(payload).subscribe(
-				(x: any) => {
-					if (x.data.token !== '') {
-						this.accountService.setLogin(x.data.token, x.data.refreshToken);
-					}
-				},
-				() => {}
-			);
+			this.accountService.login(payload).subscribe((data) => {
+				if (data.token !== '') {
+					this.accountService.setLogin(data.token, data.refreshToken);
+				}
+			});
 		}
 	}
 }
