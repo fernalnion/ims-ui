@@ -6,5 +6,5 @@ services:
       dockerfile: docker/dockerfile
     containername: ims-ui
     restart: always
-    ports: 
-      - 80 : 80
+    ports:
+      - 80: 80

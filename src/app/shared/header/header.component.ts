@@ -5,7 +5,7 @@ import { SidebarService } from 'src/app/services/sidebar.service';
 	selector: 'app-header',
 	templateUrl: './header.component.html',
 	styleUrls: ['./header.component.scss'],
-  host:{'class': 'app-header'}
+	host: { class: 'app-header' },
 })
 export class HeaderComponent implements OnInit {
 	constructor(private sidebarService: SidebarService) {}

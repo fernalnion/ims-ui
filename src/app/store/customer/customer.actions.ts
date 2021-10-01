@@ -2,9 +2,9 @@ import { createAction, props } from '@ngrx/store';
 import { Customer } from 'src/app/models/customer.model';
 import { Update } from '@ngrx/entity';
 
-enum CustomerActionTypes {
+enum CUSTOMER_ACTION_TYPE_ENUM {
 	CREATE_CUSTOMER = '[CUSTOMER] Create Customer ',
-	CREATE_CUSTOMER_SUCCESSFULLY = '[CUSTOMER] Successfully Created Customer ',
+	CREATE_CUSTOMER_SUCCESSFULLY = '[CUSTOMER] Successfully Created Customer',
 	UPDATE_CUSTOMER = '[CUSTOMER] Update Customer',
 	UPDATE_CUSTOMER_SUCCESSFULLY = '[CUSTOMER] Successfully Updated Customer',
 	DELETE_CUSTOMER = '[CUSTOMER] Delete Customer',
@@ -15,54 +15,58 @@ enum CustomerActionTypes {
 }
 
 const customerProcessLoading = createAction(
-	CustomerActionTypes.LOADING_CUSTOMERS_PROCESS
+	CUSTOMER_ACTION_TYPE_ENUM.LOADING_CUSTOMERS_PROCESS
 );
 
-const loadCustomers = createAction(CustomerActionTypes.LOAD_CUSTOMERS);
+const loadCustomers = createAction(CUSTOMER_ACTION_TYPE_ENUM.LOAD_CUSTOMERS);
 
-const customersLoadedSuccessfully = createAction(
-	CustomerActionTypes.LOAD_CUSTOMERS_SUCCESSFULLY,
+const LoadedcustomersSuccessfully = createAction(
+	CUSTOMER_ACTION_TYPE_ENUM.LOAD_CUSTOMERS_SUCCESSFULLY,
 	props<{ customers: Customer[] }>()
 );
 
-const crearteCustomer = createAction(
-	CustomerActionTypes.CREATE_CUSTOMER,
+const createCustomer = createAction(
+	CUSTOMER_ACTION_TYPE_ENUM.CREATE_CUSTOMER,
 	props<{ customer: Customer }>()
 );
 
-const crearteCustomerSuccessfully = createAction(
-	CustomerActionTypes.CREATE_CUSTOMER_SUCCESSFULLY,
+const createCustomerSuccessfully = createAction(
+	CUSTOMER_ACTION_TYPE_ENUM.CREATE_CUSTOMER_SUCCESSFULLY,
 	props<{ customer: Customer }>()
 );
 
 const deleteCustomer = createAction(
-	CustomerActionTypes.DELETE_CUSTOMER,
+	CUSTOMER_ACTION_TYPE_ENUM.DELETE_CUSTOMER,
 	props<{ customerid: string }>()
 );
 
 const deleteCustomerSuccessfully = createAction(
-	CustomerActionTypes.DELETE_CUSTOMER_SUCCESSFULLY,
+	CUSTOMER_ACTION_TYPE_ENUM.DELETE_CUSTOMER_SUCCESSFULLY,
 	props<{ customerid: string }>()
 );
 
 const updateCustomer = createAction(
-	CustomerActionTypes.UPDATE_CUSTOMER,
+	CUSTOMER_ACTION_TYPE_ENUM.UPDATE_CUSTOMER,
 	props<{ update: Update<Customer> }>()
 );
 
 const updateCustomerSuccessfully = createAction(
-	CustomerActionTypes.UPDATE_CUSTOMER_SUCCESSFULLY,
+	CUSTOMER_ACTION_TYPE_ENUM.UPDATE_CUSTOMER_SUCCESSFULLY,
 	props<{ update: Update<Customer> }>()
 );
 
-export const customersActionTypes = {
+export const CustomersActionTypes = {
+	customerProcessLoading,
+
 	loadCustomers,
-	customersLoadedSuccessfully,
-	crearteCustomer,
-	crearteCustomerSuccessfully,
+	LoadedcustomersSuccessfully,
+
+	createCustomer,
+	createCustomerSuccessfully,
+
 	deleteCustomer,
 	deleteCustomerSuccessfully,
+
 	updateCustomer,
 	updateCustomerSuccessfully,
-	customerProcessLoading,
 };

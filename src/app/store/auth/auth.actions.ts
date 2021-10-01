@@ -10,7 +10,10 @@ enum AuthActionTypes {
 
 const clearLogin = createAction(AuthActionTypes.CLEAR_LOGIN);
 const login = createAction(AuthActionTypes.LOGIN, props<any>());
-const loginSuccess = createAction(AuthActionTypes.LOGIN_SUCCESS, props<{ user: User, lastLogin:Date }>());
+const loginSuccess = createAction(
+	AuthActionTypes.LOGIN_SUCCESS,
+	props<{ user: User; lastLogin: Date }>()
+);
 const loginFailure = createAction(
 	AuthActionTypes.LOGIN_FAILURE,
 	props<{ errorMessage: String }>()

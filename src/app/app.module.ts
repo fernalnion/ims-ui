@@ -38,6 +38,7 @@ import {
 	errorInterceptorProviders,
 	dataInterceptorProviders,
 } from './helpers';
+import { SupplierService } from './services/supplier.service';
 
 registerLocaleData(en);
 
@@ -66,7 +67,7 @@ export const jwtoptionsfactory = (tokenService: TokenService) => ({
 	skipWhenExpired: true,
 });
 
-const SERVICRES = [AccountService, CustomerService];
+const SERVICRES = [AccountService, CustomerService, SupplierService];
 @NgModule({
 	declarations: [AppComponent, ...APP_COMPONENTS],
 	imports: [

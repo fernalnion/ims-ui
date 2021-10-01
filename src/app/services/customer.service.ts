@@ -12,22 +12,19 @@ export class CustomerService {
 	constructor(private http: HttpClient) {}
 
 	createCustomer(payload: Customer) {
-		return this.http
-			.post<Customer>(`${environment.apiUrl}/customers`, {
-				...payload,
-			});
+		return this.http.post<Customer>(`${environment.apiUrl}/customers`, {
+			...payload,
+		});
 	}
 
 	upadteCustomer(customerid: string, payload: Partial<Customer>): Observable<Customer> {
-		return this.http
-			.put<Customer>(`${environment.apiUrl}/customers/${customerid}`, {
-				...payload,
-			});
+		return this.http.put<Customer>(`${environment.apiUrl}/customers/${customerid}`, {
+			...payload,
+		});
 	}
 
 	deleteCustomer(customerid: string): Observable<Customer> {
-		return this.http
-			.delete<Customer>(`${environment.apiUrl}/customers/${customerid}`);
+		return this.http.delete<Customer>(`${environment.apiUrl}/customers/${customerid}`);
 	}
 
 	getCustomers(): Observable<Customer[]> {

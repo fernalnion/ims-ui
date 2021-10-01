@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CustomerRoutes, CUSTOMER_COMPONENTS } from './customer.routing';
+import { SuppliersRoutes, SUPPLIER_COMPONENTS } from './suppliers.routing';
 import { SHARED_ZORRO_MODULES } from 'src/app/ng-zorro-antd.module';
 
 @NgModule({
@@ -9,10 +9,10 @@ import { SHARED_ZORRO_MODULES } from 'src/app/ng-zorro-antd.module';
 		CommonModule,
 		FormsModule,
 		ReactiveFormsModule,
-		CustomerRoutes,
+		SuppliersRoutes,
 		SHARED_ZORRO_MODULES,
 	],
-	declarations: [...CUSTOMER_COMPONENTS],
+	declarations: [...SUPPLIER_COMPONENTS],
 	exports: [CommonModule],
 })
-export class CustomersModule {}
+export class SuppliersModule {}

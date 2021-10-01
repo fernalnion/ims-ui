@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { Customer } from '../../models/customer.model';
-import { customersActionTypes } from './customer.actions';
+import { CustomersActionTypes } from './customer.actions';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 
 export const customerStateKey = 'customers';
@@ -21,28 +21,18 @@ export const initialState = adapter.getInitialState({
 
 export const customerReducer = createReducer(
 	initialState,
-	on(customersActionTypes.customersLoadedSuccessfully, (_, action: any) => {
-		return adapter.addMany(action.customers, {
+	on(CustomersActionTypes.LoadedcustomersSuccessfully, (_, action: any) => adapter.addMany(action.customers, {
 			...initialState,
 			customersLoaded: true,
 			isLoading: false,
-		});
-	}),
-	on(customersActionTypes.customerProcessLoading, (state) => {
-		return {
+		})),
+	on(CustomersActionTypes.customerProcessLoading, (state) => ({
 			...state,
 			isLoading: true,
-		};
-	}),
-	on(customersActionTypes.crearteCustomerSuccessfully, (state, action) => {
-		return adapter.addOne(action.customer, { ...state, isLoading: false });
-	}),
-	on(customersActionTypes.deleteCustomerSuccessfully, (state, action) => {
-		return adapter.removeOne(action.customerid, { ...state, isLoading: false });
-	}),
-	on(customersActionTypes.updateCustomerSuccessfully, (state, action) => {
-		return adapter.updateOne(action.update, { ...state, isLoading: false });
-	})
+		})),
+	on(CustomersActionTypes.createCustomerSuccessfully, (state, action) => adapter.addOne(action.customer, { ...state, isLoading: false })),
+	on(CustomersActionTypes.deleteCustomerSuccessfully, (state, action) => adapter.removeOne(action.customerid, { ...state, isLoading: false })),
+	on(CustomersActionTypes.updateCustomerSuccessfully, (state, action) => adapter.updateOne(action.update, { ...state, isLoading: false }))
 );
 
 export const { selectAll, selectIds, selectEntities, selectTotal } =

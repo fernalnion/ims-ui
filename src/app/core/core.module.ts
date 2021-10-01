@@ -26,11 +26,7 @@ const STORECOMPONENTS = [
 const SERVICES = [SidebarService];
 
 @NgModule({
-	imports: [
-		...STORECOMPONENTS, 
-		...SHARED_ZORRO_MODULES,
-		HttpClientModule,
-	],
+	imports: [...STORECOMPONENTS, ...SHARED_ZORRO_MODULES, HttpClientModule],
 	declarations: [],
 	exports: [],
 	providers: [...SERVICES],

@@ -8,6 +8,8 @@ import { HeaderComponent } from './shared/header/header.component';
 import { SidebareLeftComponent } from './shared/sidebare-left/sidebare-left.component';
 import { customerStateKey } from './store/customer/customer.reducers';
 import { CustomerResolver } from './store/customer/customer.resolver';
+import { supplierStateKey } from './store/supplier/supplier.reducers';
+import { SupplierResolver } from './store/supplier/supplier.resolver';
 
 const routes: Routes = [
 	{
@@ -25,6 +27,12 @@ const routes: Routes = [
 				loadChildren: () =>
 					import('./pages/customers/customers.module').then((m) => m.CustomersModule),
 				resolve: { [customerStateKey]: CustomerResolver },
+			},
+			{
+				path: 'suppliers',
+				loadChildren: () =>
+					import('./pages/suppliers/suppliers.module').then((m) => m.SuppliersModule),
+				resolve: { [supplierStateKey]: SupplierResolver },
 			},
 			{ path: '', pathMatch: 'full', redirectTo: 'welcome' },
 		],

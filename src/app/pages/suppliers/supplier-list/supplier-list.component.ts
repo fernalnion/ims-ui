@@ -1,57 +1,56 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Update } from '@ngrx/entity';
-
-import { Customer } from 'src/app/models/customer.model';
-import { CustomersActionTypes } from 'src/app/store/customer/customer.actions';
-import { getAllCustomers } from 'src/app/store/customer/customer.selectors';
-import { AppState } from 'src/app/store/reducers';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Update } from '@ngrx/entity';
+import { Store } from '@ngrx/store';
+import { Supplier } from 'src/app/models/supplier.model';
+import { AppState } from 'src/app/store/reducers';
+import { SuppliersActionTypes } from 'src/app/store/supplier/supplier.actions';
+import { getAllSuppliers } from 'src/app/store/supplier/supplier.selectors';
 
 @Component({
-	selector: 'app-customer-list',
-	templateUrl: './customer-list.component.html',
-	styleUrls: ['./customer-list.component.scss'],
+	selector: 'app-supplier-list',
+	templateUrl: './supplier-list.component.html',
+	styleUrls: ['./supplier-list.component.scss'],
 })
-export class CustomerListComponent implements OnInit {
-	customers$: Customer[] = [];
-	customerToBeUpdated: Customer | null = null;
+export class SupplierListComponent implements OnInit {
+	suppliers$: Supplier[] = [];
+	supplierToBeUpdated: Supplier | null = null;
 
 	searchValue = '';
 	visible = false;
-	listOfDisplayData: Customer[] = [];
+	listOfDisplayData: Supplier[] = [];
 	setOfCheckedId = new Set<string>();
 	expandSet = new Set<string>();
 
 	createModelVisible = false;
 	validateCreateForm!: FormGroup;
-	constructor(private customerStore: Store<AppState>, private fb: FormBuilder) {}
+	constructor(private appStore: Store<AppState>, private fb: FormBuilder) {}
 
 	ngOnInit() {
-		this.customerStore.select(getAllCustomers).subscribe((customers) => {
-			this.customers$ = [...customers];
-			this.listOfDisplayData = [...customers];
+		this.appStore.select(getAllSuppliers).subscribe((suppliers) => {
+			this.suppliers$ = [...suppliers];
+			this.listOfDisplayData = [...suppliers];
 		});
 	}
 
-	createCustomer(customer: Customer): void {
-		this.customerStore.dispatch(CustomersActionTypes.createCustomer({ customer }));
+	createCustomer(supplier: Supplier): void {
+		this.appStore.dispatch(SuppliersActionTypes.createSupplier({ supplier }));
 	}
-	deleteCustomer(customerid: string): void {
-		this.customerStore.dispatch(CustomersActionTypes.deleteCustomer({ customerid }));
+	deleteCustomer(supplierid: string): void {
+		this.appStore.dispatch(SuppliersActionTypes.deleteSupplier({ supplierid }));
 	}
 
-	updateCustomer(updatedValues: Customer): void {
-		const update: Update<Customer> = {
-			id: this.customerToBeUpdated?.customerid || '',
+	updateCustomer(updatedValues: Supplier): void {
+		const update: Update<Supplier> = {
+			id: this.supplierToBeUpdated?.supplierid || '',
 			changes: {
-				...this.customerToBeUpdated,
+				...this.supplierToBeUpdated,
 				...updatedValues,
 			},
 		};
 
-		this.customerStore.dispatch(CustomersActionTypes.updateCustomer({ update }));
-		this.customerToBeUpdated = null;
+		this.appStore.dispatch(SuppliersActionTypes.updateSupplier({ update }));
+		this.supplierToBeUpdated = null;
 	}
 
 	reset(): void {
@@ -61,15 +60,14 @@ export class CustomerListComponent implements OnInit {
 
 	search(): void {
 		this.visible = false;
-		this.listOfDisplayData = this.customers$.filter((f: Customer) =>
+		this.listOfDisplayData = this.suppliers$.filter((f: Supplier) =>
 			f.phone.includes(this.searchValue)
 		);
 	}
 
 	open(): void {
 		this.validateCreateForm = this.fb.group({
-			firstname: [null, [Validators.required]],
-			lastname: [null],
+			name: [null, [Validators.required]],
 			email: [null, [Validators.required]],
 			phone: [null, [Validators.required]],
 			address1: [null, [Validators.required]],
@@ -78,15 +76,15 @@ export class CustomerListComponent implements OnInit {
 			state: [null, [Validators.required]],
 			country: [null, [Validators.required]],
 			pincode: [null, [Validators.required]],
+			otherDetails: [null],
 		});
 		this.createModelVisible = true;
 	}
 
-	update(olddata: Customer): void {
-		this.customerToBeUpdated = { ...olddata };
+	update(olddata: Supplier): void {
+		this.supplierToBeUpdated = { ...olddata };
 		this.validateCreateForm = this.fb.group({
-			firstname: [olddata.firstname, [Validators.required]],
-			lastname: [olddata.lastname],
+			name: [olddata.name, [Validators.required]],
 			email: [olddata.email, [Validators.required]],
 			phone: [olddata.phone, [Validators.required]],
 			address1: [olddata.address1, [Validators.required]],
@@ -95,7 +93,8 @@ export class CustomerListComponent implements OnInit {
 			state: [olddata.state, [Validators.required]],
 			country: [olddata.country, [Validators.required]],
 			pincode: [olddata.pincode, [Validators.required]],
-			customerid: [olddata.customerid],
+			otherDetails: [olddata.otherDetails],
+			supplierid: [olddata.supplierid],
 		});
 		this.createModelVisible = true;
 	}
@@ -113,7 +112,7 @@ export class CustomerListComponent implements OnInit {
 		}
 
 		if (this.validateCreateForm.valid) {
-			if (this.validateCreateForm.value.customerid) {
+			if (this.validateCreateForm.value.supplierid) {
 				this.updateCustomer(this.validateCreateForm.value);
 			} else {
 				this.createCustomer(this.validateCreateForm.value);
@@ -123,11 +122,11 @@ export class CustomerListComponent implements OnInit {
 		}
 	}
 
-	onExpandChange(customerid: string, checked: boolean): void {
+	onExpandChange(supplierid: string, checked: boolean): void {
 		if (checked) {
-			this.expandSet.add(customerid);
+			this.expandSet.add(supplierid);
 		} else {
-			this.expandSet.delete(customerid);
+			this.expandSet.delete(supplierid);
 		}
 	}
 }
