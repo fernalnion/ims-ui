@@ -56,5 +56,5 @@ export const APP_COMPONENTS = [
 	SidebareLeftComponent,
 ];
 
-export const APP_RESOLVERS = [CustomerResolver];
+export const APP_RESOLVERS = [CustomerResolver, SupplierResolver];
 export const AppRoutes = RouterModule.forChild(routes);

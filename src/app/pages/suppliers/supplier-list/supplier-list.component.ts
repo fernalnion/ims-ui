@@ -33,14 +33,14 @@ export class SupplierListComponent implements OnInit {
 		});
 	}
 
-	createCustomer(supplier: Supplier): void {
+	createSupplier(supplier: Supplier): void {
 		this.appStore.dispatch(SuppliersActionTypes.createSupplier({ supplier }));
 	}
-	deleteCustomer(supplierid: string): void {
+	deleteSupplier(supplierid: string): void {
 		this.appStore.dispatch(SuppliersActionTypes.deleteSupplier({ supplierid }));
 	}
 
-	updateCustomer(updatedValues: Supplier): void {
+	updateSupplier(updatedValues: Supplier): void {
 		const update: Update<Supplier> = {
 			id: this.supplierToBeUpdated?.supplierid || '',
 			changes: {
@@ -113,9 +113,9 @@ export class SupplierListComponent implements OnInit {
 
 		if (this.validateCreateForm.valid) {
 			if (this.validateCreateForm.value.supplierid) {
-				this.updateCustomer(this.validateCreateForm.value);
+				this.updateSupplier(this.validateCreateForm.value);
 			} else {
-				this.createCustomer(this.validateCreateForm.value);
+				this.createSupplier(this.validateCreateForm.value);
 			}
 
 			this.createModelVisible = false;

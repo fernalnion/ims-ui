@@ -14,7 +14,7 @@ export class SupplierEffects {
 			ofType(SuppliersActionTypes.loadSuppliers),
 			mergeMap(() => {
 				this.appStore.dispatch(SuppliersActionTypes.supplierProcessLoading());
-				return this.suppliersService.getCustomers();
+				return this.suppliersService.getSuppliers();
 			}),
 			map((suppliers: Supplier[]) =>
 				SuppliersActionTypes.loadedSuppliersSuccessfully({ suppliers })

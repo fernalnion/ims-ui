@@ -26,7 +26,7 @@ export class SupplierService {
 		return this.http.delete<Supplier>(`${environment.apiUrl}/suppliers/${supplierid}`);
 	}
 
-	getCustomers(): Observable<Supplier[]> {
+	getSuppliers(): Observable<Supplier[]> {
 		return this.http.get<Supplier[]>(`${environment.apiUrl}/suppliers`);
 	}
 }

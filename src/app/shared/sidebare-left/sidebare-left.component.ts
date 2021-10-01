@@ -27,6 +27,11 @@ export class SidebareLeftComponent implements OnInit {
 	ngOnInit() {
 		this.menuItems = [
 			{
+				text: 'Dashboard',
+				icon: 'dashboard',
+				link: '/welcome',
+			},
+			{
 				text: 'Customers',
 				icon: 'team',
 				link: '/customers',
